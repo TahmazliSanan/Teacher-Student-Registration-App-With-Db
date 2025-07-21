@@ -14,7 +14,7 @@ import java.util.List;
 public class SubjectService implements BaseRepository<Subject> {
     @Override
     public void insert(Subject subject) throws SQLException {
-        PreparedStatement statement = Db.connect().prepareStatement("insert into subjects (name) set values (?)");
+        PreparedStatement statement = Db.connect().prepareStatement("insert into subjects (name) values (?)");
         statement.setString(1, subject.getName());
         statement.execute();
     }
