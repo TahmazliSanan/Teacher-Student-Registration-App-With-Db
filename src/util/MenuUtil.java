@@ -16,7 +16,7 @@ public class MenuUtil {
         while (true) {
             System.out.println("=== " + title.toUpperCase() + " MENU ===");
             System.out.println("1.Create");
-            System.out.println("2.Get by PIN");
+            System.out.println("2.Get by ID");
             System.out.println("3.Get list");
             System.out.println("4.Update");
             System.out.println("5.Delete");
