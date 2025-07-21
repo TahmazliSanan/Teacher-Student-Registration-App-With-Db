@@ -30,7 +30,7 @@ public class MenuUtil {
                     menuService.create();
                     break;
                 case 2:
-                    menuService.getByPin();
+                    menuService.getById();
                     break;
                 case 3:
                     menuService.getList();
