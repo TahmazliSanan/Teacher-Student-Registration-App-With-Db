@@ -26,7 +26,7 @@ public class SubjectService implements BaseRepository<Subject> {
         ResultSet resultSet = statement.executeQuery();
 
         if (resultSet.next()) {
-            return new Subject(id, resultSet.getString("name"));
+            return new Subject(id, resultSet.getString("name"), null);
         }
         return null;
     }
@@ -38,7 +38,7 @@ public class SubjectService implements BaseRepository<Subject> {
         List<Subject> subjects = new ArrayList<>();
 
         while (resultSet.next()) {
-            subjects.add(new Subject(resultSet.getLong("id"), resultSet.getString("name")));
+            subjects.add(new Subject(resultSet.getLong("id"), resultSet.getString("name"), null));
         }
 
         return subjects;
