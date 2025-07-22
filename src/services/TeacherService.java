@@ -1,6 +1,7 @@
 package services;
 
 import data.Db;
+import entities.Subject;
 import entities.Teacher;
 import repositories.BaseRepository;
 
@@ -23,14 +24,34 @@ public class TeacherService implements BaseRepository<Teacher> {
 
     @Override
     public Teacher findById(Long id) throws SQLException {
-        PreparedStatement statement = Db.connect().prepareStatement("select * from teachers where id = ?");
+        List<Subject> subjects = new ArrayList<>();
+
+        String query =
+                "select t.id teacher_id, t.first_name, t.last_name, " +
+                        "s.id subject_id, s.name " +
+                        "from teachers t " +
+                        "left join teacher_subject ts on t.id = ts.teacher_id " +
+                        "left join subjects s on ts.subject_id = s.id " +
+                        "WHERE t.id = ?";
+
+        PreparedStatement statement = Db.connect().prepareStatement(query);
         statement.setLong(1, id);
         ResultSet resultSet = statement.executeQuery();
 
-        if (resultSet.next()) {
-            return new Teacher(id, resultSet.getString("first_name"), resultSet.getString("last_name"), null);
+        Teacher teacher = null;
+        Subject subject;
+        while (resultSet.next()) {
+            teacher = new Teacher(resultSet.getLong("teacher_id"), resultSet.getString("first_name"),
+                    resultSet.getString("last_name"), null);
+
+            if (!resultSet.wasNull()) {
+                subject = new Subject(resultSet.getLong("subject_id"), resultSet.getString("name"));
+                subjects.add(subject);
+            }
+
+            teacher.setSubjects(subjects);
         }
-        return null;
+        return teacher;
     }
 
     @Override
