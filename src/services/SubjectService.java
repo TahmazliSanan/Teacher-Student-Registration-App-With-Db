@@ -26,7 +26,7 @@ public class SubjectService implements BaseRepository<Subject> {
         ResultSet resultSet = statement.executeQuery();
 
         if (resultSet.next()) {
-            return new Subject(id, resultSet.getString("name"), null);
+            return new Subject(id, resultSet.getString("name"));
         }
         return null;
     }
@@ -38,7 +38,7 @@ public class SubjectService implements BaseRepository<Subject> {
         List<Subject> subjects = new ArrayList<>();
 
         while (resultSet.next()) {
-            subjects.add(new Subject(resultSet.getLong("id"), resultSet.getString("name"), null));
+            subjects.add(new Subject(resultSet.getLong("id"), resultSet.getString("name")));
         }
 
         return subjects;
@@ -46,7 +46,8 @@ public class SubjectService implements BaseRepository<Subject> {
 
     @Override
     public void update(Subject subject) throws SQLException {
-        PreparedStatement statement = Db.connect().prepareStatement("update subjects set name = ? where id = ?");
+        PreparedStatement statement = Db.connect()
+                .prepareStatement("update subjects set name = ? where id = ?");
         statement.setString(1, subject.getName());
         statement.setLong(2, subject.getId());
         statement.execute();

@@ -27,7 +27,7 @@ public class SubjectMenuService implements BaseMenuService {
 
         System.out.print("Enter the name: ");
         String name = new Scanner(System.in).nextLine();
-        Subject newSubject = new Subject(id, name, null);
+        Subject newSubject = new Subject(id, name);
         subjectService.insert(newSubject);
         System.out.println("Subject was added successfully!");
     }
