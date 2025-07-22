@@ -22,6 +22,7 @@ public class TeacherMenuService implements BaseMenuService {
 
     @Override
     public void create() throws SQLException {
+        int countOfSubjectsInDb = subjectService.findAll().size();
         System.out.print("Enter the ID: ");
         long id = new Scanner(System.in).nextLong();
         Teacher teacher = teacherService.findById(id);
@@ -35,8 +36,12 @@ public class TeacherMenuService implements BaseMenuService {
         String firstName = new Scanner(System.in).nextLine();
         System.out.print("Enter the last name: ");
         String lastName = new Scanner(System.in).nextLine();
-        System.out.print("Enter the count of subjects: ");
-        long countOfSubjects = new Scanner(System.in).nextLong();
+        long countOfSubjects;
+        do {
+            System.out.print("Enter the count of subjects (Maximum: " + countOfSubjectsInDb + "): ");
+            countOfSubjects = new Scanner(System.in).nextLong();
+        }
+        while (countOfSubjects > countOfSubjectsInDb);
         long subjectId;
         Subject foundSubject;
         Set<Long> addedSubjectIds = new HashSet<>();
